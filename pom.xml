@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>Archetype - demo</name>
   <url>http://maven.apache.org</url>
-  <modules>
-    <module>hej</module>
-  </modules>
+    <modules>
+        <module>Asteroids</module>
+    </modules>
 </project>
