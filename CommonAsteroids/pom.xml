@@ -6,19 +6,13 @@
         <artifactId>AsteroidsDevelop</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Asteroids</artifactId>
-    <name>Archetype - Asteroids</name>
+    <artifactId>CommonAsteroids</artifactId>
+    <name>Archetype - CommonAsteroids</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
             <artifactId>Common</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonAsteroids</artifactId>
             <version>1.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
