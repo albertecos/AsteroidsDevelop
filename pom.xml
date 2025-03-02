@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>dk.sdu.mmmi.cbse</groupId>
   <artifactId>AsteroidsDevelop</artifactId>
@@ -7,17 +7,17 @@
   <packaging>pom</packaging>
   <name>Archetype - demo</name>
   <url>http://maven.apache.org</url>
-    <modules>
-        <module>Asteroids</module>
-      <module>Common</module>
-      <module>CommonAsteroids</module>
-      <module>Bullet</module>
-      <module>CommonBullet</module>
-      <module>Collision</module>
-      <module>Core</module>
-      <module>EnemySpaceShip</module>
-      <module>Player</module>
-    </modules>
+  <modules>
+    <module>Asteroids</module>
+    <module>Common</module>
+    <module>CommonAsteroids</module>
+    <module>Bullet</module>
+    <module>CommonBullet</module>
+    <module>Collision</module>
+    <module>Core</module>
+    <module>EnemySpaceShip</module>
+    <module>Player</module>
+  </modules>
   <dependencyManagement>
     <dependencies>
       <dependency>
