@@ -9,4 +9,5 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
     public void createSplitAsteroid(Entity e, World world) {
 
     }
+
 }

@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class PlayerControlSystem implements IEntityProcessingService, IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for(Entity player : world.getEntities(Player.class)) {
+        for(Entity player : world.getEntity(Player.class)) {
             if(gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);
             }

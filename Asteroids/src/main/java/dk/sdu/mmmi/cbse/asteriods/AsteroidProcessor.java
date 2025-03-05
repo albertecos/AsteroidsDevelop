@@ -13,7 +13,7 @@ public class AsteroidProcessor implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for(Entity asteroid : world.getEntities(Asteroid.class)){
+        for(Entity asteroid : world.getEntity(Asteroid.class)){
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
 

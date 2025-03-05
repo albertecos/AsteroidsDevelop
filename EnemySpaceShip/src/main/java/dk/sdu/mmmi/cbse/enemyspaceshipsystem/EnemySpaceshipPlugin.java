@@ -33,7 +33,7 @@ public class EnemySpaceshipPlugin implements IGamePluginService {
         enemySpaceship.setY(y);
 
         enemySpaceship.setRadius(8);
-        enemySpaceship.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
+        enemySpaceship.setPolygonCoorinates(-5, -5, 10, 0, -5, 5);
 
         return enemySpaceship;
     }

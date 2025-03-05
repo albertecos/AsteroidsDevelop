@@ -20,7 +20,7 @@ public class EnemySpaceshipSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         // Loop through all entities in the world that are enemies
-        for (Entity enemySpaceship : world.getEntities(EnemySpaceship.class)) {
+        for (Entity enemySpaceship : world.getEntity(EnemySpaceship.class)) {
 
             if (random.nextDouble() < 0.05) { // 5% chance per frame to change direction
                 enemySpaceship.setRotation(random.nextInt(360)); // Random rotation between 0 and 359 degrees
