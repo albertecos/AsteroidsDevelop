@@ -76,7 +76,7 @@ public class Main extends Application {
             iGamePlugin.start(gameData, world);
         }
         for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoorinates());
+            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
@@ -119,7 +119,7 @@ public class Main extends Application {
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoorinates());
+                polygon = new Polygon(entity.getPolygonCoordinates());
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }

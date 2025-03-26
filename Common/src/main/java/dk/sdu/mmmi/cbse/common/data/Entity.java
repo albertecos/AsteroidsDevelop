@@ -13,9 +13,9 @@ public class Entity implements Serializable {
     private float radius;
 
     public String getID(){return ID.toString();}
-    public double[] getPolygonCoorinates(){return polygonCoorinates;}
+    public double[] getPolygonCoordinates(){return polygonCoorinates;}
 
-    public void setPolygonCoorinates(double... coorinates) {
+    public void setPolygonCoordinates(double... coorinates) {
         this.polygonCoorinates = coorinates;
     }
 
