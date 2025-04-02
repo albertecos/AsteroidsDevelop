@@ -11,6 +11,8 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private float radius;
+    private boolean collidedStatus;
+    private boolean removeEntity;
 
     public String getID(){return ID.toString();}
     public double[] getPolygonCoordinates(){return polygonCoorinates;}
@@ -33,6 +35,22 @@ public class Entity implements Serializable {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    public void setCollidedStatus(boolean collidedStatus) {
+        this.collidedStatus = collidedStatus;
+    }
+
+    public void setRemoveEntity(boolean removeEntity) {
+        this.removeEntity = removeEntity;
+    }
+
+    public boolean getRemoveEntity() {
+        return removeEntity;
+    }
+
+    public boolean getCollidedStatus() {
+        return collidedStatus;
     }
 
     public double getX() {

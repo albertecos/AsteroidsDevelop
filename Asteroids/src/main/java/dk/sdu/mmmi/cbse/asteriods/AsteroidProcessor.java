@@ -36,6 +36,24 @@ public class AsteroidProcessor implements IEntityProcessingService {
                 asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
             }
 
+            // Splitting asteroids with radius more than 10
+            if (asteroid.getRadius() > 10){
+                System.out.println("checking asteroid " + asteroid.getID());
+                asteroidCollision(asteroid, world);
+            }
+
+        }
+    }
+    public void asteroidCollision(Entity asteroid, World world) {
+        // Checking whether the asteroid has collided with another entity
+        if (asteroid.getCollidedStatus()){
+            System.out.println("Collision status true");
+            // Splitting the asteroids
+            asteroidSplitter.createSplitAsteroid(asteroid, world);
+            if (asteroid.getRemoveEntity()){
+                // Removing the original asteroid
+                world.removeEntity(asteroid);
+            }
         }
     }
 
