@@ -7,10 +7,17 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.Collection;
-import java.util.Map;
-import java.util.ServiceLoader;
+
+import java.lang.module.Configuration;
+import java.lang.module.ModuleDescriptor;
+import java.lang.module.ModuleFinder;
+import java.lang.module.ModuleReference;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import javafx.animation.AnimationTimer;
@@ -18,6 +25,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,10 +39,25 @@ public class Main extends Application {
     private final Pane gameWindow = new Pane();
 
     public static void main(String[] args) {
+        // Creating the layers
+        createLayer("Plugins");
         launch(Main.class);
     }
 
-    @Override
+    private static ModuleLayer createLayer(String from) {
+        //The ModuleFinder will locate the modules
+        ModuleFinder finder = ModuleFinder.of(Paths.get(from));
+
+        List<String> plugins = finder.findAll().stream().map(ModuleReference::descriptor).map(ModuleDescriptor::name).collect(Collectors.toList());
+        // Get the current boot layer
+        ModuleLayer parent = ModuleLayer.boot();
+        // Resolve split packages on the given modules
+        Configuration configuration = parent.configuration().resolve(finder, ModuleFinder.of(), plugins);
+        //Using the classloader for the new layer
+        return parent.defineModulesWithOneLoader(configuration, ClassLoader.getSystemClassLoader());
+    }
+
+        @Override
     public void start(Stage window) throws Exception {
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
@@ -71,15 +94,15 @@ public class Main extends Application {
 
         });
 
-        // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
-            iGamePlugin.start(gameData, world);
-        }
-        for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoorinates());
-            polygons.put(entity, polygon);
-            gameWindow.getChildren().add(polygon);
-        }
+            // Lookup all Game Plugins using ServiceLoader
+            for (IGamePluginService iGamePlugin : getPluginServices()) {
+                iGamePlugin.start(gameData, world);
+            }
+            for (Entity entity : world.getEntities()) {
+                Polygon polygon = new Polygon(entity.getPolygonCoorinates());
+                polygons.put(entity, polygon);
+                gameWindow.getChildren().add(polygon);
+            }
         render();
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
