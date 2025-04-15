@@ -45,14 +45,16 @@ public class Main extends Application {
     }
 
     private static ModuleLayer createLayer(String from) {
-        //The ModuleFinder will locate the modules
+        //The ModuleFinder will locate the modules/all .jar files
         ModuleFinder finder = ModuleFinder.of(Paths.get(from));
+        // Retrieves the module names from the JARs found
         List<String> plugins = finder.findAll().stream().map(ModuleReference::descriptor).map(ModuleDescriptor::name).collect(Collectors.toList());
         // Get the current boot layer
         ModuleLayer parent = ModuleLayer.boot();
         // Resolve split packages on the given modules
         Configuration configuration = parent.configuration().resolve(finder, ModuleFinder.of(), plugins);
-        //Using the classloader for the new layer
+        // Create and return a new ModuleLayer
+        // The classloader contains the found plugins
         return parent.defineModulesWithOneLoader(configuration, ClassLoader.getSystemClassLoader());
     }
 
