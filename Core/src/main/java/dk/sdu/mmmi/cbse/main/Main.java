@@ -47,7 +47,6 @@ public class Main extends Application {
     private static ModuleLayer createLayer(String from) {
         //The ModuleFinder will locate the modules
         ModuleFinder finder = ModuleFinder.of(Paths.get(from));
-
         List<String> plugins = finder.findAll().stream().map(ModuleReference::descriptor).map(ModuleDescriptor::name).collect(Collectors.toList());
         // Get the current boot layer
         ModuleLayer parent = ModuleLayer.boot();
