@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +28,15 @@ public class Game {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
+    private final List<IGamePluginService> gamePluginServices;
+    private final List<IEntityProcessingService> entityProcessingServiceList;
+    private final List<IPostEntityProcessingService> postEntityProcessingServices;
+
+    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
+        this.gamePluginServices = gamePluginServices;
+        this.entityProcessingServiceList = entityProcessingServiceList;
+        this.postEntityProcessingServices = postEntityProcessingServices;
+    }
 
     public void start(Stage window) throws Exception {
         Text text = new Text(10, 20, "Destroyed asteroids: 0");
@@ -65,7 +75,7 @@ public class Game {
         });
 
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
+        for (IGamePluginService iGamePlugin : getGamePluginServices()) {
             iGamePlugin.start(gameData, world);
         }
         for (Entity entity : world.getEntities()) {
@@ -73,7 +83,6 @@ public class Game {
             polygons.put(entity, polygon);
             gameWindow.getChildren().add(polygon);
         }
-        render();
         window.setScene(scene);
         window.setTitle("ASTEROIDS");
         window.show();
@@ -123,16 +132,18 @@ public class Game {
 
     }
 
-    private Collection<? extends IGamePluginService> getPluginServices() {
-        return ServiceLoader.load(IGamePluginService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public List<IGamePluginService> getGamePluginServices() {
+        return gamePluginServices;
     }
 
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public List<IEntityProcessingService> getEntityProcessingServices() {
+        return entityProcessingServiceList;
     }
 
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    public List<IPostEntityProcessingService> getPostEntityProcessingServices() {
+        return postEntityProcessingServices;
     }
+
+
 
 }
