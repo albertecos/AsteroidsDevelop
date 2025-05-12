@@ -177,7 +177,6 @@
         <module>Bullet</module>
         <module>Collision</module>
         <module>Common</module>
-        <module>CommonAsteroids</module>
         <module>CommonBullet</module>
         <module>EnemySpaceShip</module>
         <module>Player</module>
