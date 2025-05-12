@@ -5,7 +5,6 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 import java.util.Collection;
 import java.util.Random;
@@ -13,14 +12,14 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnemySpaceshipSystem implements IEntityProcessingService {
+public class EnemySpaceShipControlSystem implements IEntityProcessingService {
 
     private final Random random = new Random();
 
     @Override
     public void process(GameData gameData, World world) {
         // Loop through all entities in the world that are enemies
-        for (Entity enemySpaceship : world.getEntity(EnemySpaceship.class)) {
+        for (Entity enemySpaceship : world.getEntity(EnemySpaceShip.class)) {
 
             if (random.nextDouble() < 0.05) { // 5% chance per frame to change direction
                 enemySpaceship.setRotation(random.nextInt(360)); // Random rotation between 0 and 359 degrees

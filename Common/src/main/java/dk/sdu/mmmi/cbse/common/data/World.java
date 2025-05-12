@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.cbse.common.data;
 
-import java.lang.invoke.TypeDescriptor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 

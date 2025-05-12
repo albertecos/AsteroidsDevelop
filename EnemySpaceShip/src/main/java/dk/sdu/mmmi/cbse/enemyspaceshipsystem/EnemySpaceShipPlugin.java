@@ -7,25 +7,25 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 import java.util.Random;
 
-public class EnemySpaceshipPlugin implements IGamePluginService {
+public class EnemySpaceShipPlugin implements IGamePluginService {
 
     private final Random random = new Random();
 
     private Entity enemySpaceship;
 
-    public EnemySpaceshipPlugin() {
+    public EnemySpaceShipPlugin() {
     }
 
     @Override
     public void start(GameData gameData, World world) {
-        // enemySpaceship-entety to the world
+        // enemySpaceship-entity to the world
 
         enemySpaceship = createEnemySpaceship(gameData);
         world.addEntity(enemySpaceship);
     }
 
     private Entity createEnemySpaceship(GameData gameData) {
-        enemySpaceship = new EnemySpaceship();
+        enemySpaceship = new EnemySpaceShip();
 
         float x = random.nextFloat(gameData.getDisplayWidth());
         float y = random.nextFloat(gameData.getDisplayHeight());
