@@ -5,6 +5,9 @@ module Core {
     requires spring.context;
     requires spring.core;
     requires spring.beans;
+    requires spring.web;
+    requires spring.boot;
+    requires org.slf4j;
     exports dk.sdu.mmmi.cbse.main;
     opens dk.sdu.mmmi.cbse.main to javafx.graphics,spring.core;
     uses dk.sdu.mmmi.cbse.common.services.IGamePluginService;
