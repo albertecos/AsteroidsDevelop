@@ -5,23 +5,34 @@ import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-
 public class Main extends Application {
+
+    private ApplicationContext context;
 
     public static void main(String[] args) {
         launch(Main.class);
     }
 
     @Override
-    public void start(Stage window) throws Exception {
-        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    public void init() {
+        // Only plain Spring context (NO Spring Boot)
+        context = new AnnotationConfigApplicationContext(SpringConfig.class);
+    }
 
+    @Override
+    public void start(Stage window) {
+        // Print all Spring beans
         for (String beanName : context.getBeanDefinitionNames()) {
             System.out.println(beanName);
         }
 
+        // Get your Game bean and start it
         Game game = context.getBean(Game.class);
-        game.start(window);
+        try {
+            game.start(window);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         game.render();
     }
 }
