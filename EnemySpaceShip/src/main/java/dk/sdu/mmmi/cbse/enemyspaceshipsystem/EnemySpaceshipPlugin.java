@@ -18,8 +18,6 @@ public class EnemySpaceshipPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        // enemySpaceship-entety to the world
-
         enemySpaceship = createEnemySpaceship(gameData);
         world.addEntity(enemySpaceship);
     }
