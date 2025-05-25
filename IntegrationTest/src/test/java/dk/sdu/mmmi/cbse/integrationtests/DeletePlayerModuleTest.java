@@ -20,7 +20,21 @@ public class DeletePlayerModuleTest {
         //Delete the JAR file
         assertTrue(original.delete());
 
-        //Execute without the Player module
+        int exitCodeNoPlayer = runMain();
+        assertEquals(0, exitCodeNoPlayer);
+
+        //Rebuild Player module after the test
+        ProcessBuilder mvnProcessBuilder = new ProcessBuilder("mvn", "install", "-pl", "Player", "-am");
+        mvnProcessBuilder.directory(new File(PROJECT_ROOT));
+        Process mvnProcess = mvnProcessBuilder.start();
+        assertEquals(0, mvnProcess.waitFor());
+
+        int exitCodeWithPlayer = runMain();
+        assertEquals(0, exitCodeWithPlayer);
+    }
+
+    private int runMain() throws IOException, InterruptedException {
+        //Execute the system
         ProcessBuilder processBuilder = new ProcessBuilder(
                 "java",
                 "--module-path", "mods-mvn",
@@ -31,15 +45,6 @@ public class DeletePlayerModuleTest {
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 
-        int exitCode = process.waitFor();
-        assertEquals(exitCode, 0);
-
-        //Rebuild Player module after the test
-        ProcessBuilder mvnProcessBuilder = new ProcessBuilder("mvn", "install", "-pl", "Player", "-am");
-        mvnProcessBuilder.directory(new File(PROJECT_ROOT));
-        Process mvnProcess = mvnProcessBuilder.start();
-
-        int mvnExitCode = mvnProcess.waitFor();
-        assertEquals(mvnExitCode, 0);
+        return process.waitFor();
     }
 }
