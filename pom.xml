@@ -180,7 +180,6 @@
         <module>CommonBullet</module>
         <module>EnemySpaceShip</module>
         <module>Player</module>
-        <module>ScoringSystem</module>
         <module>IntegrationTest</module>
     </modules>
 </project>
