@@ -15,7 +15,6 @@ public class Main extends Application {
 
     @Override
     public void init() {
-        // Only plain Spring context (NO Spring Boot)
         context = new AnnotationConfigApplicationContext(SpringConfig.class);
     }
 
