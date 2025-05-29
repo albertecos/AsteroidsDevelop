@@ -13,12 +13,9 @@ public class EnemySpaceShipPlugin implements IGamePluginService {
 
     private Entity enemySpaceship;
 
-    public EnemySpaceShipPlugin() {
-    }
-
     @Override
     public void start(GameData gameData, World world) {
-        // enemySpaceship-entity to the world
+        // enemySpaceship-entety to the world
 
         enemySpaceship = createEnemySpaceship(gameData);
         world.addEntity(enemySpaceship);
@@ -33,13 +30,17 @@ public class EnemySpaceShipPlugin implements IGamePluginService {
         enemySpaceship.setY(y);
 
         enemySpaceship.setRadius(8);
-        enemySpaceship.setPolygonCoorinates(-5, -5, 10, 0, -5, 5);
+        enemySpaceship.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
 
         return enemySpaceship;
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(enemySpaceship);
+        for(Entity e : world.getEntities()) {
+            if(e.getClass() == EnemySpaceShip.class) {
+                world.removeEntity(e);
+            }
+        }
     }
 }

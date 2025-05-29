@@ -7,7 +7,7 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 public class AsteroidProcessor implements IEntityProcessingService {
 
-    private AsteroidSplitter asteroidSplitter = new AsteroidSplitter();
+    private final AsteroidSplitterImpl asteroidSplitter = new AsteroidSplitterImpl();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -19,7 +19,9 @@ public class AsteroidProcessor implements IEntityProcessingService {
             asteroid.setY(asteroid.getY() + changeY * 0.5);
 
             if (asteroid.getX() < 0) {
-                asteroid.setX(asteroid.getX() - gameData.getDisplayHeight());
+                asteroid.setX(gameData.getDisplayWidth());
+            }else if (asteroid.getX() > gameData.getDisplayWidth()) {
+                asteroid.setX(0);
             }
 
             if (asteroid.getX() > gameData.getDisplayWidth()) {
@@ -27,22 +29,24 @@ public class AsteroidProcessor implements IEntityProcessingService {
             }
 
             if (asteroid.getY() < 0) {
-                asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
+                asteroid.setY(gameData.getDisplayHeight());
+            }else if (asteroid.getY() > gameData.getDisplayHeight()) {
+                asteroid.setY(0);
             }
 
             if (asteroid.getY() > gameData.getDisplayHeight()) {
                 asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
             }
-
+            asteroidCollision(asteroid, world);
         }
     }
+    public void asteroidCollision(Entity asteroid, World world) {
+        boolean collided = asteroid.getCollidedStatus();
 
-    /**
-     * Dependency Injection using OSGi Declarative Services
-     */
-    public void setAsteroidSplitter(AsteroidSplitter asteroidSplitter) {
-        this.asteroidSplitter = asteroidSplitter;
+        // Checking whether the asteroid has collided with another entity
+        if (collided){
+            // Splitting the asteroids
+            asteroidSplitter.createSplitAsteroid(asteroid, world);
+        }
     }
-
-    public void resetAsteroidSplitter(AsteroidSplitter asteroidSplitter) {this.asteroidSplitter = null;}
 }

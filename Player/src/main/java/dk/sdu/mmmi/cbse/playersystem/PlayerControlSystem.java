@@ -6,29 +6,32 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-public class PlayerControlSystem implements IEntityProcessingService {
+public class PlayerControlSystem implements IEntityProcessingService, IPostEntityProcessingService {
+
     @Override
     public void process(GameData gameData, World world) {
         for(Entity player : world.getEntity(Player.class)) {
-            if(GameKeys.isDown(GameKeys.LEFT)) {
+            if(gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 5);
             }
-            if(GameKeys.isDown(GameKeys.RIGHT)) {
+            if(gameData.getKeys().isDown(GameKeys.RIGHT)) {
                 player.setRotation(player.getRotation() + 5);
             }
-            if(GameKeys.isDown(GameKeys.UP)) {
+            if(gameData.getKeys().isDown(GameKeys.UP)) {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
                 double changeY = Math.sin(Math.toRadians(player.getRotation()));
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if(GameKeys.isDown(GameKeys.SPACE)) {
+            if(gameData.getKeys().isDown(GameKeys.SPACE)) {
                 getBulletSPIs().stream().findFirst().ifPresent(bulletSPI -> {world.addEntity(bulletSPI.createBullet(player, gameData));}
                 );
             }
@@ -47,10 +50,20 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if(player.getY() > gameData.getDisplayHeight()){
                 player.setY(gameData.getDisplayHeight() - 1);
             }
+            handleCollision(player, world);
         }
     }
 
     protected Collection<? extends BulletSPI> getBulletSPIs() {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private void handleCollision(Entity player, World world) {
+        if (player.getCollidedStatus() && player.getHealth() == 10) {
+            player.setHealth(player.getHealth() - 10);
+            world.removeEntity(player);
+        }else if (player.getCollidedStatus() && player.getHealth() > 10){
+            player.setHealth(player.getHealth() - 10);
+        }
     }
 }
