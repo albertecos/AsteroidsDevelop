@@ -33,7 +33,7 @@ class PlayerControlSystemTest {
         playerControlSystem = new PlayerControlSystem();
         //gameKeys = new GameKeys();
 
-        player.setPolygonCoorinates(-5, -5, 10, 0, -5, 5);
+        player.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
         player.setX(100);
         player.setY(100);
         player.setRadius(8);

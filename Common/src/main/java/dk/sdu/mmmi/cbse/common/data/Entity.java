@@ -6,17 +6,20 @@ import java.util.UUID;
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
 
-    private double[] polygonCoorinates;
+    private double[] polygonCoordinates;
     private double x;
     private double y;
     private double rotation;
     private float radius;
+    private boolean collidedStatus;
+    private int health;
+    private int destroyedAsteroids;
 
     public String getID(){return ID.toString();}
-    public double[] getPolygonCoorinates(){return polygonCoorinates;}
+    public double[] getPolygonCoordinates(){return polygonCoordinates;}
 
-    public void setPolygonCoorinates(double... coorinates) {
-        this.polygonCoorinates = coorinates;
+    public void setPolygonCoordinates(double... coorinates) {
+        this.polygonCoordinates = coorinates;
     }
 
     public void setX(double x) {
@@ -35,6 +38,22 @@ public class Entity implements Serializable {
         this.radius = radius;
     }
 
+    public void setCollidedStatus(boolean collidedStatus) {
+        this.collidedStatus = collidedStatus;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setDestroyedAsteroids(int destroyedAsteroids) {
+        this.destroyedAsteroids = destroyedAsteroids;
+    }
+
+    public boolean getCollidedStatus() {
+        return collidedStatus;
+    }
+
     public double getX() {
         return x;
     }
@@ -49,5 +68,13 @@ public class Entity implements Serializable {
 
     public float getRadius() {
         return radius;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDestroyedAsteroids() {
+        return destroyedAsteroids;
     }
 }

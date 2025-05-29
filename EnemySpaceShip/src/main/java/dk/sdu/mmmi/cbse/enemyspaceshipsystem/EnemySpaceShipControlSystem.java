@@ -47,6 +47,9 @@ public class EnemySpaceShipControlSystem implements IEntityProcessingService {
             if (random.nextDouble() < 0.03) {
                 shootBullet(enemySpaceship, gameData, world);
             }
+            if (enemySpaceship.getCollidedStatus()) {
+                world.removeEntity(enemySpaceship);
+            }
         }
     }
     private void shootBullet(Entity enemySpaceship, GameData gameData, World world) {
