@@ -9,12 +9,17 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
     @Override
     public void createSplitAsteroid(Entity e, World world) {
         if(e.getRadius() <= 5) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.getClass().getSimpleName().equals("Player")) {
+                    entity.setDestroyedAsteroids(entity.getDestroyedAsteroids() + 1);
+                }
+            }
+            e.setDestroyedAsteroids(e.getDestroyedAsteroids() + 1);
             world.removeEntity(e);
             return;
         }
 
         world.removeEntity(e);
-        System.out.println("Splitting Asteroids");
         // Creating new asteroids
         Entity asteroid1 = new Asteroid();
         Entity asteroid2 = new Asteroid();
@@ -42,10 +47,8 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
 
         // Adding the asteroids into the world
         world.addEntity(asteroid1);
-        System.out.println("Spawned asteroid 1 with size: " + size);
 
         world.addEntity(asteroid2);
-        System.out.println("Spawned asteroid 2 with size: " + size);
     }
 
 }

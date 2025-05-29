@@ -29,6 +29,8 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
+    private final Text healthText = new Text(10, 40, "Player Health: 100");
+    private final Text asteroidText = new Text(10, 20, "Destroyed asteroids: 0");
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -36,9 +38,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(text);
+        gameWindow.getChildren().add(asteroidText);
+        gameWindow.getChildren().add(healthText);
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -92,6 +94,8 @@ public class Main extends Application {
             public void handle(long now) {
                 update();
                 draw();
+                updateHealthDisplay();
+                updateDestroyedAsteroids();
                 gameData.getKeys().update();
             }
 
@@ -128,6 +132,20 @@ public class Main extends Application {
             polygon.setRotate(entity.getRotation());
         }
 
+    }
+    private void updateHealthDisplay() {
+        for (Entity entity : world.getEntities()) {
+            if (entity.getClass().getSimpleName().equals("Player")) {
+                healthText.setText("Player Health: " + entity.getHealth());
+            }
+        }
+    }
+    private void updateDestroyedAsteroids() {
+        for (Entity entity : world.getEntities()) {
+            if (entity.getClass().getSimpleName().equals("Player")) {
+                asteroidText.setText("Destroyed asteroids: " + entity.getDestroyedAsteroids());
+            }
+        }
     }
 
     private Collection<? extends IGamePluginService> getPluginServices() {

@@ -12,6 +12,8 @@ public class Entity implements Serializable {
     private double rotation;
     private float radius;
     private boolean collidedStatus;
+    private int health;
+    private int destroyedAsteroids;
 
     public String getID(){return ID.toString();}
     public double[] getPolygonCoordinates(){return polygonCoorinates;}
@@ -40,6 +42,14 @@ public class Entity implements Serializable {
         this.collidedStatus = collidedStatus;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setDestroyedAsteroids(int destroyedAsteroids) {
+        this.destroyedAsteroids = destroyedAsteroids;
+    }
+
     public boolean getCollidedStatus() {
         return collidedStatus;
     }
@@ -58,5 +68,13 @@ public class Entity implements Serializable {
 
     public float getRadius() {
         return radius;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDestroyedAsteroids() {
+        return destroyedAsteroids;
     }
 }

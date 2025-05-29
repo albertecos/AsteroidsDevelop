@@ -21,10 +21,8 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                 // CollisionDetection
                 if (this.collides(entity1, entity2)) {
-                    System.out.println("collides " + entity1.getID() + " with " + entity2.getID());
                     entity1.setCollidedStatus(true);
                     entity2.setCollidedStatus(true);
-                    System.out.println(entity1.getCollidedStatus() + " " + entity2.getCollidedStatus());
                 }
             }
 

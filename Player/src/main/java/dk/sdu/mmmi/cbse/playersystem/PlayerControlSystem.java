@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 public class PlayerControlSystem implements IEntityProcessingService, IPostEntityProcessingService {
+
     @Override
     public void process(GameData gameData, World world) {
         for(Entity player : world.getEntity(Player.class)) {
@@ -49,13 +50,20 @@ public class PlayerControlSystem implements IEntityProcessingService, IPostEntit
             if(player.getY() > gameData.getDisplayHeight()){
                 player.setY(gameData.getDisplayHeight() - 1);
             }
-            if (player.getCollidedStatus()) {
-                world.removeEntity(player);
-            }
+            handleCollision(player, world);
         }
     }
 
     private Collection<? extends BulletSPI> getBulletSPIs() {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private void handleCollision(Entity player, World world) {
+        if (player.getCollidedStatus() && player.getHealth() == 10) {
+            player.setHealth(player.getHealth() - 10);
+            world.removeEntity(player);
+        }else if (player.getCollidedStatus() && player.getHealth() > 10){
+            player.setHealth(player.getHealth() - 10);
+        }
     }
 }
