@@ -1,12 +1,9 @@
 package dk.sdu.mmmi.cbse.asteriods;
 
-import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
-import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.World;
 
-public class AsteroidSplitterImpl implements IAsteroidSplitter {
-    @Override
+public class AsteroidSplitterImpl{
     public void createSplitAsteroid(Entity e, World world) {
         if(e.getRadius() <= 5) {
             for (Entity entity : world.getEntities()) {

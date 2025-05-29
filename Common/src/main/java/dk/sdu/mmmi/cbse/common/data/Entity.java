@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
 
-    private double[] polygonCoorinates;
+    private double[] polygonCoordinates;
     private double x;
     private double y;
     private double rotation;
@@ -16,10 +16,10 @@ public class Entity implements Serializable {
     private int destroyedAsteroids;
 
     public String getID(){return ID.toString();}
-    public double[] getPolygonCoordinates(){return polygonCoorinates;}
+    public double[] getPolygonCoordinates(){return polygonCoordinates;}
 
     public void setPolygonCoordinates(double... coorinates) {
-        this.polygonCoorinates = coorinates;
+        this.polygonCoordinates = coorinates;
     }
 
     public void setX(double x) {
