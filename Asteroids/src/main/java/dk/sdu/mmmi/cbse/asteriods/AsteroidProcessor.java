@@ -21,7 +21,9 @@ public class AsteroidProcessor implements IEntityProcessingService {
             asteroid.setY(asteroid.getY() + changeY * 0.5);
 
             if (asteroid.getX() < 0) {
-                asteroid.setX(asteroid.getX() - gameData.getDisplayHeight());
+                asteroid.setX(gameData.getDisplayWidth());
+            }else if (asteroid.getX() > gameData.getDisplayWidth()) {
+                asteroid.setX(0);
             }
 
             if (asteroid.getX() > gameData.getDisplayWidth()) {
@@ -29,40 +31,24 @@ public class AsteroidProcessor implements IEntityProcessingService {
             }
 
             if (asteroid.getY() < 0) {
-                asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
+                asteroid.setY(gameData.getDisplayHeight());
+            }else if (asteroid.getY() > gameData.getDisplayHeight()) {
+                asteroid.setY(0);
             }
 
             if (asteroid.getY() > gameData.getDisplayHeight()) {
                 asteroid.setY(asteroid.getY() - gameData.getDisplayHeight());
             }
-
-            // Splitting asteroids with radius more than 10
-            if (asteroid.getRadius() > 10){
-                System.out.println("checking asteroid " + asteroid.getID());
-                asteroidCollision(asteroid, world);
-            }
-
+            asteroidCollision(asteroid, world);
         }
     }
     public void asteroidCollision(Entity asteroid, World world) {
+        boolean collided = asteroid.getCollidedStatus();
+
         // Checking whether the asteroid has collided with another entity
-        if (asteroid.getCollidedStatus()){
-            System.out.println("Collision status true");
+        if (collided){
             // Splitting the asteroids
             asteroidSplitter.createSplitAsteroid(asteroid, world);
-            if (asteroid.getRemoveEntity()){
-                // Removing the original asteroid
-                world.removeEntity(asteroid);
-            }
         }
     }
-
-    /**
-     * Dependency Injection using OSGi Declarative Services
-     */
-    public void setAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {
-        this.asteroidSplitter = asteroidSplitter;
-    }
-
-    public void resetAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {this.asteroidSplitter = null;}
 }

@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemyspaceshipsystem;
 
+import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -38,6 +39,10 @@ public class EnemySpaceshipPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(enemySpaceship);
+        for(Entity e : world.getEntities()) {
+            if(e.getClass() == EnemySpaceship.class) {
+                world.removeEntity(e);
+            }
+        }
     }
 }

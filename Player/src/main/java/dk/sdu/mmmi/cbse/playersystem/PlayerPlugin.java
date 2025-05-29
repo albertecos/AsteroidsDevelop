@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
+import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -9,26 +10,22 @@ public class PlayerPlugin implements IGamePluginService {
 
     private Entity player;
 
-    public PlayerPlugin() {
-    }
-
     @Override
     public void start(GameData gameData, World world) {
-        player = createPlayerShip(gameData);
+        player = new Player();
+        player.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
+        player.setX(gameData.getDisplayHeight() / 2);
+        player.setY(gameData.getDisplayWidth() / 2);
+        player.setRadius(8);
         world.addEntity(player);
-    }
-
-    private Entity createPlayerShip(GameData gameData) {
-        Entity playerShip = new Player();
-        playerShip.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
-        playerShip.setX(gameData.getDisplayHeight() / 2);
-        playerShip.setY(gameData.getDisplayWidth() / 2);
-        playerShip.setRadius(8);
-        return playerShip;
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(player);
+        for(Entity e : world.getEntities()) {
+            if(e.getClass() == Player.class) {
+                world.removeEntity(e);
+            }
+        }
     }
 }

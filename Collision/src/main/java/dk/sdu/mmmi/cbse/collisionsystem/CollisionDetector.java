@@ -25,21 +25,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     entity1.setCollidedStatus(true);
                     entity2.setCollidedStatus(true);
                     System.out.println(entity1.getCollidedStatus() + " " + entity2.getCollidedStatus());
-                    if (!entity1.getCollidedStatus() || !entity2.getCollidedStatus()) {
-                        world.removeEntity(entity1);
-                        world.removeEntity(entity2);
-                    }
-                    //entity1.setRemoveEntity(true);
-                    //entity2.setRemoveEntity(true);
-
-                    
                 }
             }
 
         }
     }
-
-
     //This method is based in vector distances, maybe check up on that for
     //further explanation and formulas
     public Boolean collides(Entity e1, Entity e2) {

@@ -8,16 +8,22 @@ import dk.sdu.mmmi.cbse.common.data.World;
 public class AsteroidSplitterImpl implements IAsteroidSplitter {
     @Override
     public void createSplitAsteroid(Entity e, World world) {
+        if(e.getRadius() <= 5) {
+            world.removeEntity(e);
+            return;
+        }
+
+        world.removeEntity(e);
         System.out.println("Splitting Asteroids");
         // Creating new asteroids
         Entity asteroid1 = new Asteroid();
         Entity asteroid2 = new Asteroid();
 
         // Placing the asteroids apart from each other
-        asteroid1.setX(e.getX() + 10);
-        asteroid1.setY(e.getY() + 10);
-        asteroid2.setX(e.getX() - 10);
-        asteroid2.setY(e.getY() - 10);
+        asteroid1.setX(e.getX() + 20);
+        asteroid1.setY(e.getY() + 20);
+        asteroid2.setX(e.getX() - 50);
+        asteroid2.setY(e.getY() - 50);
 
         float size = e.getRadius() / 2;
 
@@ -33,9 +39,6 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
 
         asteroid1.setCollidedStatus(false);
         asteroid2.setCollidedStatus(false);
-
-        asteroid1.setRemoveEntity(false);
-        asteroid2.setRemoveEntity(false);
 
         // Adding the asteroids into the world
         world.addEntity(asteroid1);

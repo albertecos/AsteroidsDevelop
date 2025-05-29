@@ -34,21 +34,24 @@ public class PlayerControlSystem implements IEntityProcessingService, IPostEntit
                 getBulletSPIs().stream().findFirst().ifPresent(bulletSPI -> {world.addEntity(bulletSPI.createBullet(player, gameData));}
                 );
             }
-        if(player.getX() < 0) {
-            player.setX(1);
-        }
+            if(player.getX() < 0) {
+                player.setX(1);
+            }
 
-        if(player.getX() > gameData.getDisplayWidth()){
-            player.setX(gameData.getDisplayWidth() - 1);
-        }
+            if(player.getX() > gameData.getDisplayWidth()){
+                player.setX(gameData.getDisplayWidth() - 1);
+            }
 
-        if(player.getY() < 0) {
-            player.setY(1);
-        }
+            if(player.getY() < 0) {
+                player.setY(1);
+            }
 
-        if(player.getY() > gameData.getDisplayHeight()){
-            player.setY(gameData.getDisplayHeight() - 1);
-        }
+            if(player.getY() > gameData.getDisplayHeight()){
+                player.setY(gameData.getDisplayHeight() - 1);
+            }
+            if (player.getCollidedStatus()) {
+                world.removeEntity(player);
+            }
         }
     }
 
