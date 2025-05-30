@@ -65,7 +65,7 @@ public class EnemySpaceShipControlSystem implements IEntityProcessingService {
     private void handleCollision(Entity enemy, World world) {
         if (enemy.getCollidedStatus() && enemy.getHealth() == 0) {
             world.removeEntity(enemy);
-        }else if (enemy.getCollidedStatus() && enemy.getHealth() > 10){
+        }else if (enemy.getCollidedStatus() && enemy.getHealth() >= 10){
             enemy.setHealth(enemy.getHealth() - 10);
             enemy.setCollidedStatus(false);
         }
