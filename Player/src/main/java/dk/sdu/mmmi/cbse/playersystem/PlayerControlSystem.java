@@ -57,8 +57,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
     }
 
     private void handleCollision(Entity player, World world) {
-        if (player.getCollidedStatus() && player.getHealth() == 10) {
-            player.setHealth(player.getHealth() - 10);
+        if (player.getCollidedStatus() && player.getHealth() == 0) {
             world.removeEntity(player);
         }else if (player.getCollidedStatus() && player.getHealth() > 10){
             player.setHealth(player.getHealth() - 10);
