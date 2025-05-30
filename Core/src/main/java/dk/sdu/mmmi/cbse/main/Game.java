@@ -30,8 +30,9 @@ public class Game {
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
 
-    private final Text healthText = new Text(10, 40, "Player Health: 100");
     private final Text asteroidText = new Text(10, 20, "Destroyed asteroids: 0");
+    private final Text playerHealthText = new Text(10, 40, "Player Health: 100");
+    private final Text enemyHealthText = new Text(10, 60, "Enemy Health: 100");
 
     Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
         this.gamePluginServices = gamePluginServices;
@@ -42,7 +43,8 @@ public class Game {
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(asteroidText);
-        gameWindow.getChildren().add(healthText);
+        gameWindow.getChildren().add(playerHealthText);
+        gameWindow.getChildren().add(enemyHealthText);
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -95,7 +97,8 @@ public class Game {
             public void handle(long now) {
                 update();
                 draw();
-                updateHealthDisplay();
+                updatePlayerHealthDisplay();
+                updateEnemyHealthDisplay();
                 updateDestroyedAsteroids();
                 gameData.getKeys().update();
             }
@@ -134,10 +137,17 @@ public class Game {
         }
 
     }
-    private void updateHealthDisplay() {
+    private void updatePlayerHealthDisplay() {
         for (Entity entity : world.getEntities()) {
             if (entity.getClass().getSimpleName().equals("Player")) {
-                healthText.setText("Player Health: " + entity.getHealth());
+                playerHealthText.setText("Player Health: " + entity.getHealth());
+            }
+        }
+    }
+    private void updateEnemyHealthDisplay() {
+        for (Entity entity : world.getEntities()) {
+            if (entity.getClass().getSimpleName().equals("EnemySpaceShip")) {
+                enemyHealthText.setText("Enemy Health: " + entity.getHealth());
             }
         }
     }

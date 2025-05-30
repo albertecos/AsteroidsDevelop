@@ -47,9 +47,7 @@ public class EnemySpaceShipControlSystem implements IEntityProcessingService {
             if (random.nextDouble() < 0.03) {
                 shootBullet(enemySpaceship, gameData, world);
             }
-            if (enemySpaceship.getCollidedStatus()) {
-                world.removeEntity(enemySpaceship);
-            }
+            handleCollision(enemySpaceship, world);
         }
     }
     private void shootBullet(Entity enemySpaceship, GameData gameData, World world) {
@@ -63,5 +61,14 @@ public class EnemySpaceShipControlSystem implements IEntityProcessingService {
 
     private Collection<? extends BulletSPI> getBulletSPIs() {
         return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+    private void handleCollision(Entity enemy, World world) {
+        if (enemy.getCollidedStatus() && enemy.getHealth() == 10) {
+            enemy.setHealth(enemy.getHealth() - 10);
+            world.removeEntity(enemy);
+        }else if (enemy.getCollidedStatus() && enemy.getHealth() > 10){
+            enemy.setHealth(enemy.getHealth() - 10);
+            enemy.setCollidedStatus(false);
+        }
     }
 }

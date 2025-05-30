@@ -62,6 +62,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             world.removeEntity(player);
         }else if (player.getCollidedStatus() && player.getHealth() > 10){
             player.setHealth(player.getHealth() - 10);
+            player.setCollidedStatus(false);
         }
     }
 }
