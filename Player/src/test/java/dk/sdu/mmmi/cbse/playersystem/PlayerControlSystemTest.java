@@ -117,7 +117,5 @@ class PlayerControlSystemTest {
         assertEquals(101, player.getX());
         assertEquals(100, player.getY());
     }
-
-
 }
 
